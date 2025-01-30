@@ -1,22 +1,20 @@
-SRC = $(wildcard *.c)
-TARGETS_SRC = $(wildcard ej*.c)
-TARGETS = $(TARGETS_SRC:%.c=%)
-
+SRC = run_commands.c
+BIN = $(SRC:%.c=%)
+OBJ = $(SRC:%.c=%.o)
 CC = gcc
-CFLAGS = -pthread -g $(CPPFLAGS)
-LDFLAGS = -pthread
-LIBS =
+CFLAGS = -g -Wall
+LDFLAGS = -g 
+LIBS = 
 
-all: $(TARGETS)
+all: $(BIN)
 
 %.o: %.c Makefile
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(TARGETS): %: %.o
+$(BIN): %: %.o
 	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
 
 .PHONY: clean
 
 clean:
-	-rm $(TARGETS) $(SRC:%.c=%.o)
-
+	-rm -f $(BIN) $(OBJ)
